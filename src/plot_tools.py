@@ -52,11 +52,12 @@ def get_lethality_rate(data: pd.DataFrame,
     if end is None:
         end = country_data['date'].max()
     to_keep = (start<=country_data['date'])&(country_data['date']<=end)
-    sub_data = country_data[to_keep]
+    sub_data = country_data[to_keep] 
     dates = sub_data['date'][to_keep]
     months = np.array([date.fromisoformat(d).strftime('%b-%Y') for d in dates])
+    all_ticks = np.arange(len(months))
     ticks = np.where(months[1:]!=months[:-1])[0]
-    tick_labels = months[ticks]
+    tick_labels = months[ticks+1]
     nb_plots = 1+len(additional_plots)
     fig, axes = plt.subplots(nb_plots, 1, figsize=(10, height*nb_plots), sharex=True)
     if 1 < nb_plots:
@@ -65,18 +66,17 @@ def get_lethality_rate(data: pd.DataFrame,
         ax = axes
 
     cases = generic_filter(country_data.sort_values('date')['new_cases'],
-                           np.nanmean, size=smoothing_size)[to_keep]
+                           np.nanmean, size=smoothing_size)
     death = generic_filter(country_data.sort_values('date')['new_deaths'],
-                           np.nanmean, size=smoothing_size)[to_keep]
-
-    cases = generic_filter(cases, np.nansum, size=max(1, death_delay))
-    death = generic_filter(death, np.nansum, size=max(1, death_delay))
+                           np.nanmean, size=smoothing_size)
     if death_delay == 0:
         lethality_rate = death/cases
     else:
         lethality_rate = death[death_delay:]/cases[:-death_delay]
     lethality_rate[1<lethality_rate]=0
-    ax.plot(lethality_rate, '-', label='Lethality ratio')
+    lethality_rate = lethality_rate[to_keep[death_delay:]]
+    all_ticks = all_ticks[len(all_ticks)-len(lethality_rate):]
+    ax.plot(all_ticks, lethality_rate, '-', label='Lethality ratio')
     ax.set_ylabel('Ratio death over #cases')
     ax.legend()
     ax.set_title(country)
