@@ -12,7 +12,8 @@ def get_lethality_rate(data: pd.DataFrame,
                        death_delay=1,
                        height=2,
                        start=None,
-                       end=None):
+                       end=None,
+                       ylim=None):
     """
     Plot a figure with including the lethatlity rate and
     some other plots if asked to.
@@ -44,8 +45,11 @@ def get_lethality_rate(data: pd.DataFrame,
             The date is expected to be in the format 'yyyy-mm-dd'.
             If None is given ends at the end of the dataset.
             Default `None`
+        ylim (2-tuple): min and max value for the lethality ratio
     """
     warnings.filterwarnings("ignore", category=RuntimeWarning)
+    if ylim is None:
+        ylim = (0, 0.04)
     country_data = data[data['location']==country]
     if start is None:
         start = country_data['date'].min()
@@ -78,6 +82,7 @@ def get_lethality_rate(data: pd.DataFrame,
     all_ticks = all_ticks[len(all_ticks)-len(lethality_rate):]
     ax.plot(all_ticks, lethality_rate, '-', label='Lethality ratio')
     ax.set_ylabel('Ratio death over #cases')
+    ax.set_ylim(ylim)
     ax.legend()
     ax.set_title(country)
     if 1 < nb_plots:
@@ -92,5 +97,6 @@ def get_lethality_rate(data: pd.DataFrame,
     step_ticks = max(1, len(ticks)//6)
     ax.set_xticks(ticks[::step_ticks])
     ax.set_xticklabels(tick_labels[::step_ticks])
+    ax.set_xlim(0, max(all_ticks))
     fig.tight_layout()
     return fig
