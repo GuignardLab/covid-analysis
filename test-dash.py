@@ -33,8 +33,8 @@ app.layout = html.Div(id = 'parent', children = [
 
 def graph_update(dropdown_value):
     print(dropdown_value)
-    sub_data = df[df==dropdown_value]
-    fig = go.Figure([go.Scatter(x = df['date'], y = df['new_cases'],\
+    sub_data = data[data==dropdown_value]
+    fig = go.Figure([go.Scatter(x = sub_data['date'], y = sub_data['new_cases'],\
                      line = dict(color = 'firebrick', width = 4))
                      ])
     
