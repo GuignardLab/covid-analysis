@@ -184,7 +184,7 @@ app.layout = html.Div([
             options = [ {'label': c, 'value': c} for c in available_indicators],
             value = 'France'),
         ],
-        style={'width': '49%', 'display': 'inline-block', 'height': '10%'}),
+        style={'width': '49%', 'display': 'inline-block', 'height': 2}),
 
 
     ], style={
