@@ -48,7 +48,6 @@ def graph_update(dropdown_value):
     else:
         lethality_rate = death[death_delay:]/cases[:-death_delay]
     lethality_rate[1<lethality_rate]=0
-    lethality_rate = lethality_rate[to_keep[death_delay:]]
     all_ticks = country_data['date'][len(country_data['date'])-len(lethality_rate):]
     # ax.plot(all_ticks, lethality_rate, '-', label='Lethality ratio')
     # ax.set_ylabel('Ratio death over #cases')
