@@ -258,7 +258,7 @@ def graph_update(country):
     return {
         'data': [go.Scatter(
                     x=country_data['date'],
-                    y=country_data['new_cases'],
+                    y=cases,
                     mode='lines'
         )],
         'layout': {
