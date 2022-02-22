@@ -6,10 +6,10 @@ from dash.dependencies import Input, Output
 import pandas as pd
 
 
-app = dash.Dash()
-
 data_path = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.csv'
 data = pd.read_csv(data_path)
+
+app = dash.Dash()
 
 app.layout = html.Div(id = 'parent', children = [
     html.H1(id = 'H1', children = 'Covid-data',
@@ -33,7 +33,7 @@ app.layout = html.Div(id = 'parent', children = [
 
 def graph_update(dropdown_value):
     print(dropdown_value)
-    sub_data = data[data==dropdown_value]
+    sub_data = data[data['location']==dropdown_value]
     fig = go.Figure([go.Scatter(x = sub_data['date'], y = sub_data['new_cases'],\
                      line = dict(color = 'firebrick', width = 4))
                      ])
