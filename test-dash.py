@@ -255,7 +255,7 @@ def graph_update(country):
         )],
         'layout': {
             'yaxis': {'type': 'linear',
-                      'update_yaxes': 'lethality'},
+                      'matches': {'lethality'}},
             'xaxis': {'showgrid': False}
         },
     }
