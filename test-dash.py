@@ -239,9 +239,9 @@ def graph_update(country):
                 'x': 0, 'y': 0.85, 'xanchor': 'left', 'yanchor': 'bottom',
                 'xref': 'paper', 'yref': 'paper', 'showarrow': False,
                 'align': 'left', 'bgcolor': 'rgba(255, 255, 255, 0.5)',
-                'text': title
+                'text': 'Lethality Rate'
             }],
-            'yaxis': {'type': 'linear' if axis_type == 'Linear' else 'log'},
+            'yaxis': {'type': 'linear'},
             'xaxis': {'showgrid': False}
         }
     }
