@@ -184,7 +184,7 @@ app.layout = html.Div([
             options = [ {'label': c, 'value': c} for c in available_indicators],
             value = 'France'),
         ],
-        style={'width': '49%', 'display': 'inline-block', 'height': 2}),
+        style={'width': '49%', 'display': 'inline-block'}),
 
 
     ], style={
@@ -196,7 +196,7 @@ app.layout = html.Div([
     html.Div([
         dcc.Graph(id='lethality'),
         dcc.Graph(id='new_cases'),
-    ], style={'display': 'inline-block', 'width': '80%'}),
+    ], style={'display': 'inline-block', 'width': '80%', 'height': 10}),
 ])
 
 @app.callback(Output(component_id='lethality', component_property='figure'),
