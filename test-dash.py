@@ -86,7 +86,7 @@ def graph_update(dropdown_value):
                       xaxis_title = 'Dates',
                       yaxis_title = 'Ratio death over #cases'
                       )
-    return (fig, fig2)
+    return (fig)
 
 
 
