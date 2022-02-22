@@ -206,7 +206,7 @@ def graph_update(country):
     print(country)
     smoothing_size = 7
     death_delay = 18
-    country_data = data[data['location']==country]
+    country_data = df[df['location']==country]
     cases = generic_filter(country_data.sort_values('date')['new_cases'],
                            np.nanmean, size=smoothing_size)
     death = generic_filter(country_data.sort_values('date')['new_deaths'],
@@ -242,15 +242,6 @@ def graph_update(country):
                      ])
 
     fig.update_layout(title = 'Lethality Rate',
-                      xaxis_title = 'Dates',
-                      yaxis_title = 'Ratio death over #cases'
-                      )
-
-    fig2 = go.Figure([go.Scatter(x = all_ticks, y = lethality_rate,\
-                      line = dict(color = 'firebrick', width = 4))
-                     ])
-
-    fig2.update_layout(title = 'Lethality Rate',
                       xaxis_title = 'Dates',
                       yaxis_title = 'Ratio death over #cases'
                       )
