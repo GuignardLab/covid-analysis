@@ -73,11 +73,20 @@ def graph_update(dropdown_value):
                      line = dict(color = 'firebrick', width = 4))
                      ])
     
-    fig.update_layout(title = 'Number of new cases',
+    fig.update_layout(title = 'Lethality Rate',
                       xaxis_title = 'Dates',
-                      yaxis_title = 'Prices'
+                      yaxis_title = 'Ratio death over #cases'
                       )
-    return fig  
+
+    fig2 = go.Figure([go.Scatter(x = all_ticks, y = lethality_rate,\
+                      line = dict(color = 'firebrick', width = 4))
+                     ])
+
+    fig2.update_layout(title = 'Lethality Rate',
+                      xaxis_title = 'Dates',
+                      yaxis_title = 'Ratio death over #cases'
+                      )
+    return (fig, fig2)
 
 
 
