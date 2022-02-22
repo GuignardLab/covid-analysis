@@ -44,3 +44,4 @@ def graph_update(dropdown_value):
 
 if __name__ == '__main__': 
     app.run_server('0.0.0.0')
+    print('test')
