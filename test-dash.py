@@ -254,9 +254,10 @@ def graph_update(country):
                     mode='lines'
         )],
         'layout': {
-            'yaxis': {'type': 'linear'},
+            'yaxis': {'type': 'linear',
+                      'update_yaxes': 'lethality'},
             'xaxis': {'showgrid': False}
-        }
+        },
     }
 
 
