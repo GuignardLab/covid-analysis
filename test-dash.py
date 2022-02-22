@@ -3,6 +3,7 @@ import dash_html_components as html
 import plotly.graph_objects as go
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
+import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -34,14 +35,16 @@ app.layout = html.Div(id = 'parent', children = [
 def graph_update(dropdown_value):
     print(dropdown_value)
     sub_data = data[data['location']==dropdown_value]
-    fig = go.Figure([go.Scatter(x = sub_data['date'], y = sub_data['new_cases'],\
-                     line = dict(color = 'firebrick', width = 4))
-                     ])
+    fig, ax = plt.subplots(figsize=(10, 8))
+    ax.plot(sub_data['new_cases'])
+    # fig = go.Figure([go.Scatter(x = sub_data['date'], y = sub_data['new_cases'],\
+    #                  line = dict(color = 'firebrick', width = 4))
+    #                  ])
     
-    fig.update_layout(title = 'Number of new cases',
-                      xaxis_title = 'Dates',
-                      yaxis_title = 'Prices'
-                      )
+    # fig.update_layout(title = 'Number of new cases',
+    #                   xaxis_title = 'Dates',
+    #                   yaxis_title = 'Prices'
+    #                   )
     return fig  
 
 
