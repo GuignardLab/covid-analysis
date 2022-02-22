@@ -217,34 +217,34 @@ def graph_update(country):
         lethality_rate = death[death_delay:]/cases[:-death_delay]
     lethality_rate[1<lethality_rate]=0
     all_ticks = country_data['date'][len(country_data['date'])-len(lethality_rate):]
-    # ax.plot(all_ticks, lethality_rate, '-', label='Lethality ratio')
-    # ax.set_ylabel('Ratio death over #cases')
-    # ax.set_ylim(ylim)
-    # ax.legend()
-    # ax.set_title(country)
-    # if 1 < nb_plots:
-    #     for ax, val in zip(axes[1:], additional_plots):
-    #         Y = generic_filter(country_data.sort_values('date')[val],
-    #                            np.nanmean, size=smoothing_size)[to_keep]
-    #         ax.plot(Y, '-', label=val)
-    #         ax.set_ylabel(f'#{val}')
-    #         if 'per_hundred' in val:
-    #             ax.set_ylim(0, 100)
-    #         ax.legend()
-    # step_ticks = max(1, len(ticks)//6)
-    # ax.set_xticks(ticks[::step_ticks])
-    # ax.set_xticklabels(tick_labels[::step_ticks])
-    # ax.set_xlim(0, max(all_ticks))
-    # fig.tight_layout()
+    # fig = go.Figure([go.Scatter(x = all_ticks, y = lethality_rate,\
+    #                  line = dict(color = 'firebrick', width = 4))
+    #                  ])
 
-    fig = go.Figure([go.Scatter(x = all_ticks, y = lethality_rate,\
-                     line = dict(color = 'firebrick', width = 4))
-                     ])
+    # fig.update_layout(title = 'Lethality Rate',
+    #                   xaxis_title = 'Dates',
+    #                   yaxis_title = 'Ratio death over #cases'
+    #                   )
 
-    fig.update_layout(title = 'Lethality Rate',
-                      xaxis_title = 'Dates',
-                      yaxis_title = 'Ratio death over #cases'
-                      )
+    return {
+        'data': [go.Scatter(
+                    x=all_ticks,
+                    y=lethality_rate,
+                    mode='lines+markers'
+        )],
+        'layout': {
+            'height': 225,
+            'margin': {'l': 20, 'b': 30, 'r': 10, 't': 10},
+            'annotations': [{
+                'x': 0, 'y': 0.85, 'xanchor': 'left', 'yanchor': 'bottom',
+                'xref': 'paper', 'yref': 'paper', 'showarrow': False,
+                'align': 'left', 'bgcolor': 'rgba(255, 255, 255, 0.5)',
+                'text': title
+            }],
+            'yaxis': {'type': 'linear' if axis_type == 'Linear' else 'log'},
+            'xaxis': {'showgrid': False}
+        }
+    }
     return (fig)
 
 app.css.append_css({
