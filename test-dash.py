@@ -184,7 +184,7 @@ app.layout = html.Div([
             options = [ {'label': c, 'value': c} for c in available_indicators],
             value = 'France'),
         ],
-        style={'width': '49%', 'display': 'inline-block'}),
+        style={'width': '49%', 'display': 'inline-block', 'height': '10%'}),
 
 
     ], style={
@@ -246,14 +246,6 @@ def graph_update(country):
     country_data = df[df['location']==country]
     cases = generic_filter(country_data.sort_values('date')['new_cases'],
                            np.nanmean, size=smoothing_size)
-    # fig = go.Figure([go.Scatter(x = all_ticks, y = lethality_rate,\
-    #                  line = dict(color = 'firebrick', width = 4))
-    #                  ])
-
-    # fig.update_layout(title = 'Lethality Rate',
-    #                   xaxis_title = 'Dates',
-    #                   yaxis_title = 'Ratio death over #cases'
-    #                   )
 
     return {
         'data': [go.Scatter(
@@ -266,6 +258,8 @@ def graph_update(country):
             'xaxis': {'showgrid': False}
         }
     }
+
+
 app.css.append_css({
     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
 })
