@@ -201,7 +201,6 @@ app.layout = html.Div([
 
 @app.callback(Output(component_id='lethality', component_property='figure'),
               [Input(component_id='dropdown', component_property='value')])
-
 def graph_update(country):
     print(country)
     smoothing_size = 7
@@ -230,23 +229,43 @@ def graph_update(country):
         'data': [go.Scatter(
                     x=all_ticks,
                     y=lethality_rate,
-                    mode='lines+markers'
+                    mode='lines'
         )],
         'layout': {
-            'height': 225,
-            'margin': {'l': 20, 'b': 30, 'r': 10, 't': 10},
-            'annotations': [{
-                'x': 0, 'y': 0.85, 'xanchor': 'left', 'yanchor': 'bottom',
-                'xref': 'paper', 'yref': 'paper', 'showarrow': False,
-                'align': 'left', 'bgcolor': 'rgba(255, 255, 255, 0.5)',
-                'text': 'Lethality Rate'
-            }],
             'yaxis': {'type': 'linear'},
             'xaxis': {'showgrid': False}
         }
     }
-    return (fig)
 
+@app.callback(Output(component_id='new_cases', component_property='figure'),
+              [Input(component_id='dropdown', component_property='value')])
+def graph_update(country):
+    print(country)
+    smoothing_size = 7
+    death_delay = 18
+    country_data = df[df['location']==country]
+    cases = generic_filter(country_data.sort_values('date')['new_cases'],
+                           np.nanmean, size=smoothing_size)
+    # fig = go.Figure([go.Scatter(x = all_ticks, y = lethality_rate,\
+    #                  line = dict(color = 'firebrick', width = 4))
+    #                  ])
+
+    # fig.update_layout(title = 'Lethality Rate',
+    #                   xaxis_title = 'Dates',
+    #                   yaxis_title = 'Ratio death over #cases'
+    #                   )
+
+    return {
+        'data': [go.Scatter(
+                    x=country_data['date'],
+                    y=country_data['new_cases'],
+                    mode='lines'
+        )],
+        'layout': {
+            'yaxis': {'type': 'linear'},
+            'xaxis': {'showgrid': False}
+        }
+    }
 app.css.append_css({
     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
 })
